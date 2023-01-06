@@ -1,0 +1,15 @@
+.profile__edit-button-pen {
+  background-image: url(../../../images/profile__pen.svg);
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 10px;
+  background-size: 10px 10px;
+}
+
+@media all and (max-width: 425px) {
+  .profile__edit-button-pen {
+    width: 7.5px;
+    height: 7.5px;
+    background-size: 7.5px 7.5px;
+  }
+}
