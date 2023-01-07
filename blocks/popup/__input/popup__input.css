@@ -6,7 +6,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
-  min-width: 358px;
+  max-width: 358px;
   box-sizing: border-box;
 }
 
@@ -16,7 +16,7 @@
 
 @media all and (max-width: 520px) {
   .popup__input {
-    min-width: 238px;
+    max-width: 238px;
   }
 
   .popup__input:last-of-type {

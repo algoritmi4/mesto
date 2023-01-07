@@ -8,32 +8,30 @@ let userName = document.querySelector('.profile__text_type_name');
 
 let userActivity = document.querySelector('.profile__text_type_activity');
 
-let userInputs = document.querySelectorAll('.popup__input');
+let userInputName = document.getElementById('popup__input_type_name');
+
+let userInputActivity = document.getElementById('popup__input_type_activity');
 
 let saveButton = document.querySelector('.popup__button');
 
 function popupOpen() {
   popup.classList.add('popup_opened');
+  userInputName.value = userName.textContent;
+  userInputActivity.value = userActivity.textContent;
 }
 
 function popupClose() {
   popup.classList.remove('popup_opened');
-  userInputs[0].value = userName.textContent;
-  userInputs[1].value = userActivity.textContent;
+}
+
+function addText() {
+  userName.textContent = userInputName.value;
+  userActivity.textContent = userInputActivity.value;
+  popup.classList.remove('popup_opened');
 }
 
 editButton.addEventListener('click', popupOpen);
 
 closeButton.addEventListener('click', popupClose);
-
-userInputs[0].value = userName.textContent;
-
-userInputs[1].value = userActivity.textContent;
-
-function addText() {
-  userName.textContent = userInputs[0].value;
-  userActivity.textContent = userInputs[1].value;
-  popup.classList.remove('popup_opened');
-}
 
 saveButton.addEventListener('click', addText);

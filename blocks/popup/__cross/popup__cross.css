@@ -9,6 +9,10 @@
   position: relative;
   bottom: 8px;
   left: 239px;
+  transition: opacity .1s linear;
+  background-color: transparent;
+  border: none;
+  padding: 0;
 }
 
 .popup__cross:hover {
@@ -17,10 +21,10 @@
 
 @media all and (max-width: 520px) {
   .popup__cross {
-    width: 20px;
-    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
     background-size: 20px 20px;
     bottom: 16px;
-    left: 139px;
+    left: 131px;
   }
 }
