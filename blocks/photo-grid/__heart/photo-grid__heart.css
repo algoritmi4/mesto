@@ -9,6 +9,7 @@
   cursor: pointer;
   border: none;
   background-color: transparent;
+  padding: 0;
 }
 
 .photo-grid__heart:hover {

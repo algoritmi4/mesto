@@ -13,6 +13,7 @@
   transition: opacity .2s linear;
   box-sizing: border-box;
   border: none;
+  padding: 0;
 }
 
 .popup__button:hover {
