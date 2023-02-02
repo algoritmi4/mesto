@@ -61,9 +61,9 @@ const initialCards = [
   }
 ];
 
-/* Функция обьявления всех большинства констант и слушателей */
+/* Функция обьявления большинства констант и слушателей */
 /* для метода initialCard.forEach и функции createNewCard */
-function AllConsts() {
+function createAllConsts() {
 
   /* Создание нового элемента страницы путем копирования template-заготовки */
   const newCard = cardTemplate.cloneNode(true);
@@ -97,7 +97,7 @@ function AllConsts() {
 initialCards.forEach(data => {
 
   /* Обьявление функции с константами */
-  const newCard = AllConsts();
+  const newCard = createAllConsts();
 
   newCard.querySelector('.photo-grid__image').src = data.link;
   newCard.querySelector('.photo-grid__image').alt = data.name;
@@ -108,7 +108,7 @@ initialCards.forEach(data => {
 function createNewCard() {
 
   /* Обьявление функции с константами */
-  const newCard = AllConsts();
+  const newCard = createAllConsts();
 
   newCard.querySelector('.photo-grid__image').src = userInputPicture.value;
   newCard.querySelector('.photo-grid__image').alt = userInputTitle.value;
@@ -117,14 +117,14 @@ function createNewCard() {
 }
 
 /* Функция открытия попапа для создания карточки пользователем */
-function cardPopupOpen() {
+function openCardPopup() {
   cardPopup.classList.add('popup_opened');
   userInputTitle.value = '';
   userInputPicture.value = '';
 }
 
 /* Функция открытия попапа для редактирования профиля */
-function popupOpen() {
+function openPopup() {
   popup.classList.add('popup_opened');
   userInputName.value = userName.textContent;
   userInputActivity.value = userActivity.textContent;
@@ -137,9 +137,9 @@ function addText() {
   popup.classList.remove('popup_opened');
 }
 
-editButton.addEventListener('click', popupOpen);
+editButton.addEventListener('click', openPopup);
 
-addButton.addEventListener('click', cardPopupOpen);
+addButton.addEventListener('click', openCardPopup);
 
 saveButton.addEventListener('click', addText);
 
