@@ -1,4 +1,4 @@
-.popup {
+.picture-popup {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -14,13 +14,13 @@
   transition: visibility .3s, opacity 0.3s linear;
 }
 
-.popup::after {
+.picture-popup::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 0.5;
+  opacity: 0.9;
   background-color: black;
 }

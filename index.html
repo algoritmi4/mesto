@@ -9,8 +9,8 @@
     <title>Проект Место</title>
   </head>
   <body class="page">
-    <div class="popup">
-      <button type="button" class="popup__cross"></button>
+    <div id="popup" class="popup">
+      <button id="popup__cross" type="button" class="popup__cross"></button>
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form name="popup__form" class="popup__form">
@@ -28,9 +28,39 @@
             type="text"
             placeholder="О себе"
           >
-          <button type="button" class="popup__button">Сохранить</button>
+          <button id="popup__button" type="button" class="popup__button">Сохранить</button>
         </form>
       </div>
+    </div>
+    <div id="card-popup" class="popup">
+      <button id="card-popup__cross" type="button" class="popup__cross"></button>
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form name="popup__form" class="popup__form">
+          <input
+            name="popup__input"
+            class="popup__input"
+            id="card-popup__input_type_title"
+            type="text"
+            placeholder="Название"
+          >
+          <input
+            name="popup__input"
+            class="popup__input"
+            id="card-popup__input_type_picture"
+            type="text"
+            placeholder="Ссылка на картинку"
+          >
+          <button id="card-popup__button" type="button" class="popup__button">Создать</button>
+        </form>
+      </div>
+    </div>
+    <div class="picture-popup">
+      <figure class="picture-popup__figure">
+        <button class="picture-popup__cross"></button>
+        <img class="picture-popup__image">
+        <figcaption class="picture-popup__caption"></figcaption>
+      </figure>
     </div>
     <header class="header">
       <img class="logo" src="./images/logo.svg" alt="Логотип" >
@@ -49,78 +79,23 @@
         </div>
         <button type="button" class="profile__add-button"></button>
       </section>
-      <section class="photo-grid">
-        <div class="photo-grid__card">
-          <img
-            src="./images/photo-grid__image1.jpg"
-            alt="природа Карачаевска"
-            class="photo-grid__image"
-          >
-          <div class="photo-grid__card-caption">
-            <h2 class="photo-grid__card-title">Карачаевск</h2>
-            <button type="button" class="photo-grid__heart"></button>
-          </div>
-        </div>
-        <div class="photo-grid__card">
-          <img
-            src="./images/photo-grid__image2.jpg"
-            alt="гора Эльбрус"
-            class="photo-grid__image"
-          >
-          <div class="photo-grid__card-caption">
-            <h2 class="photo-grid__card-title">Гора Эльбрус</h2>
-            <button type="button" class="photo-grid__heart"></button>
-          </div>
-        </div>
-        <div class="photo-grid__card">
-          <img
-            src="./images/photo-grid__image3.jpg"
-            alt="гора Домбай"
-            class="photo-grid__image"
-          >
-          <div class="photo-grid__card-caption">
-            <h2 class="photo-grid__card-title">Домбай</h2>
-            <button type="button" class="photo-grid__heart"></button>
-          </div>
-        </div>
-        <div class="photo-grid__card">
-          <img
-            src="./images/photo-grid__image2.jpg"
-            alt="гора Эльбрус"
-            class="photo-grid__image"
-          >
-          <div class="photo-grid__card-caption">
-            <h2 class="photo-grid__card-title">Гора Эльбрус</h2>
-            <button type="button" class="photo-grid__heart"></button>
-          </div>
-        </div>
-        <div class="photo-grid__card">
-          <img
-            src="./images/photo-grid__image3.jpg"
-            alt="гора Домбай"
-            class="photo-grid__image"
-          >
-          <div class="photo-grid__card-caption">
-            <h2 class="photo-grid__card-title">Домбай</h2>
-            <button type="button" class="photo-grid__heart"></button>
-          </div>
-        </div>
-        <div class="photo-grid__card">
-          <img
-            src="./images/photo-grid__image1.jpg"
-            alt="природа Карачаево-Черкессии"
-            class="photo-grid__image"
-          >
-          <div class="photo-grid__card-caption">
-            <h2 class="photo-grid__card-title">Карачаево-Черкесия</h2>
-            <button type="button" class="photo-grid__heart"></button>
-          </div>
-        </div>
-      </section>
+      <section class="photo-grid"></section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
+    <template id="new-card">
+      <div class="photo-grid__card">
+        <button class="photo-grid__trash"></button>
+        <img
+          class="photo-grid__image"
+        >
+        <div class="photo-grid__card-caption">
+          <h2 class="photo-grid__card-title"></h2>
+          <button type="button" class="photo-grid__heart"></button>
+        </div>
+      </div>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

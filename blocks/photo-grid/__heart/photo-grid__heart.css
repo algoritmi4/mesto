@@ -15,7 +15,3 @@
 .photo-grid__heart:hover {
   opacity: 0.5;
 }
-
-.photo-grid__heart:active {
-  background-image: url(../../../images/photo-grid__heart-active.svg);
-}
