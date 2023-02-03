@@ -9,11 +9,11 @@
     <title>Проект Место</title>
   </head>
   <body class="page">
-    <div id="popup" class="popup">
+    <div id="profile-popup" class="popup">
       <button id="popup__cross" type="button" class="popup__cross"></button>
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="popup__form" class="popup__form">
+        <form id="profile-popup-form" name="popup__form" class="popup__form">
           <input
             name="popup__input"
             class="popup__input"
@@ -28,7 +28,7 @@
             type="text"
             placeholder="О себе"
           >
-          <button id="popup__button" type="button" class="popup__button">Сохранить</button>
+          <button id="popup__button" type="submit" class="popup__button">Сохранить</button>
         </form>
       </div>
     </div>
@@ -36,7 +36,7 @@
       <button id="card-popup__cross" type="button" class="popup__cross"></button>
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
-        <form name="popup__form" class="popup__form">
+        <form id="card-popup-form" name="popup__form" class="popup__form">
           <input
             name="popup__input"
             class="popup__input"
@@ -51,15 +51,15 @@
             type="text"
             placeholder="Ссылка на картинку"
           >
-          <button id="card-popup__button" type="button" class="popup__button">Создать</button>
+          <button id="card-popup__button" type="submit" class="popup__button">Создать</button>
         </form>
       </div>
     </div>
-    <div class="picture-popup">
-      <figure class="picture-popup__figure">
-        <button class="picture-popup__cross"></button>
-        <img class="picture-popup__image">
-        <figcaption class="picture-popup__caption"></figcaption>
+    <div id="picture-popup" class="popup">
+      <figure class="popup__figure">
+        <button class="popup__cross popup__cross_picture"></button>
+        <img class="popup__image">
+        <figcaption class="popup__caption"></figcaption>
       </figure>
     </div>
     <header class="header">
