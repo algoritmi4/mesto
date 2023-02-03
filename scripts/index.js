@@ -91,6 +91,7 @@ function createCard(item) {
   cardElementImage.addEventListener('click', () => {
     openPopup(picturePopup);
     picturePopupImage.src = cardElementImage.src;
+    picturePopupImage.alt = cardElementImage.alt;
     picturePopupCaption.textContent = cardElementTitle.textContent;
   });
 
@@ -125,8 +126,7 @@ cardPopupForm.addEventListener('submit', (e) => {
     name: userInputTitle.value,
     link: userInputPicture.value
   });
-  userInputTitle.value = '';
-  userInputPicture.value = '';
+  e.target.reset();
 })
 
 editButton.addEventListener('click', () => {
