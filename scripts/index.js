@@ -1,38 +1,12 @@
+const popups = document.querySelectorAll('.popup');
+
 const editButton = document.querySelector('.profile__edit-button');
 
 const addCardButton = document.querySelector('.profile__add-button');
 
-const photoGrid = document.querySelector('.photo-grid');
-
-const popupCloseButtons = document.querySelectorAll('.popup__cross');
-
 const profilePopup = document.querySelector('#profile-popup');
 
 const profilePopupForm = document.querySelector('#profile-popup-form');
-
-const cardPopup = document.querySelector('#card-popup');
-
-const cardPopupForm = document.querySelector('#card-popup-form');
-
-const picturePopup = document.querySelector('#picture-popup');
-
-const picturePopupImage = document.querySelector('.popup__image');
-
-const picturePopupCaption = document.querySelector('.popup__caption');
-
-const userName = document.querySelector('.profile__text_type_name');
-
-const userActivity = document.querySelector('.profile__text_type_activity');
-
-const userInputName = document.querySelector('#popup__input_type_name');
-
-const userInputActivity = document.querySelector('#popup__input_type_activity');
-
-const userInputTitle = document.querySelector('#card-popup__input_type_title');
-
-const userInputPicture = document.querySelector('#card-popup__input_type_picture');
-
-const cardTemplate = document.querySelector('#new-card').content.querySelector('.photo-grid__card');
 
 const initialCards = [
   {
@@ -61,15 +35,20 @@ const initialCards = [
   }
 ];
 
-function openPopup(popup) {
+// Открытие попапа
+const openPopup = (popup) => {
   popup.classList.add('popup_opened');
 };
 
-function closePopup(popup) {
+// Закрытие попапа
+const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
 };
 
-function createCard(item) {
+// Создание карточки и навешивание на нее всех слушателей
+const createCard = (item) => {
+  const cardTemplate = document.querySelector('#new-card').content.querySelector('.photo-grid__card');
+
   const cardElement = cardTemplate.cloneNode(true);
 
   const newCardLike = cardElement.querySelector('.photo-grid__heart');
@@ -79,6 +58,12 @@ function createCard(item) {
   const cardElementImage = cardElement.querySelector('.photo-grid__image');
 
   const cardElementTitle = cardElement.querySelector('.photo-grid__card-title');
+
+  const picturePopup = document.querySelector('#picture-popup');
+
+  const picturePopupImage = document.querySelector('.popup__image');
+  
+  const picturePopupCaption = document.querySelector('.popup__caption');
 
   cardElementImage.src = item.link;
   cardElementImage.alt = item.name;
@@ -93,48 +78,100 @@ function createCard(item) {
     picturePopupImage.src = cardElementImage.src;
     picturePopupImage.alt = cardElementImage.alt;
     picturePopupCaption.textContent = cardElementTitle.textContent;
+
+    setEscapeEventListener();
   });
 
   return cardElement;
-}
+};
 
-function addCard(item) {
+// Добавление карточки на страницу
+const addCard = (item) => {
+  const photoGrid = document.querySelector('.photo-grid');
+
   const newCard = createCard(item);
 
   photoGrid.prepend(newCard);
-}
+};
+
+// Закрытие попапа при нажатии клавиши "Escape"
+const closePopupEscapePressed = (e) => {
+  const popupOpened = document.querySelector('.popup_opened');
+  
+  if(e.key === 'Escape') {
+    closePopup(popupOpened);
+
+    document.removeEventListener('keydown', closePopupEscapePressed);
+  };
+};
+
+// Добавление слушателя вынесено в отдельную ф-ию
+// т.к. требуется в нескольких местах
+const setEscapeEventListener = () => {
+  document.addEventListener('keydown', closePopupEscapePressed);
+};
+
+const setEventListeners = () => {
+  const cardPopup = document.querySelector('#card-popup');
+
+  const cardPopupForm = document.querySelector('#card-popup-form');
+  
+  const userName = document.querySelector('.profile__text_type_name');
+  
+  const userActivity = document.querySelector('.profile__text_type_activity');
+  
+  const userInputName = document.querySelector('#popup__input_type_name');
+  
+  const userInputActivity = document.querySelector('#popup__input_type_activity');
+  
+  const userInputTitle = document.querySelector('#card-popup__input_type_title');
+  
+  const userInputPicture = document.querySelector('#card-popup__input_type_picture');
+
+  profilePopupForm.addEventListener('submit', () => {
+    closePopup(profilePopup);
+    userName.textContent = userInputName.value;
+    userActivity.textContent = userInputActivity.value;
+  });
+  
+  cardPopupForm.addEventListener('submit', (e) => {
+    closePopup(cardPopup);
+
+    addCard({
+      name: userInputTitle.value,
+      link: userInputPicture.value
+    });
+
+    e.target.reset();
+  });
+  
+  editButton.addEventListener('click', () => {
+    openPopup(profilePopup);
+    userInputName.value = userName.textContent;
+    userInputActivity.value = userActivity.textContent;
+
+    setEscapeEventListener();
+  });
+  
+  addCardButton.addEventListener('click', () => {
+    openPopup(cardPopup);
+
+    setEscapeEventListener();
+  });
+};
 
 initialCards.forEach(addCard);
 
-popupCloseButtons.forEach(button => {
-  const popup = button.closest('.popup');
+popups.forEach(popup => {
+  popup.addEventListener('click', e => {
+    const closeButton = popup.querySelector('.popup__cross')
 
-  button.addEventListener('click', () => closePopup(popup));
-});
+    if(e.target === e.currentTarget || e.target === closeButton) {
+      closePopup(popup);
 
-profilePopupForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  closePopup(profilePopup);
-  userName.textContent = userInputName.value;
-  userActivity.textContent = userInputActivity.value;
-});
-
-cardPopupForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  closePopup(cardPopup);
-  addCard({
-    name: userInputTitle.value,
-    link: userInputPicture.value
+      document.removeEventListener('keydown', closePopupEscapePressed);
+    };
   });
-  e.target.reset();
-})
-
-editButton.addEventListener('click', () => {
-  openPopup(profilePopup);
-  userInputName.value = userName.textContent;
-  userInputActivity.value = userActivity.textContent;
 });
 
-addCardButton.addEventListener('click', () => {
-  openPopup(cardPopup);
-});
+setEventListeners();

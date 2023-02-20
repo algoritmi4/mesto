@@ -10,7 +10,7 @@
   .popup__cross_picture {
     top: -36px;
     right: 0;
-    bottom: 0;
-    left: 0;
+    bottom: unset;
+    left: unset;
   }
 }
