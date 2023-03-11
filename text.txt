@@ -1,0 +1,18 @@
+if(profilePopupButton.disabled) {
+    profilePopupButton.disabled = false;
+    profilePopupButton.classList.remove('popup__button_disabled');
+    
+    profilePopup.querySelectorAll('.popup__error').forEach(profilePopupError => {
+      profilePopupError.textContent = '';
+    });
+    profilePopup.querySelectorAll('.popup__input_type_error').forEach(profilePopupInput => {
+      profilePopupInput.classList.remove('popup__input_type_error');
+    });
+  };
+
+  if(cardPopupInputTitle.value === '') {
+    const cardPopupButton = cardPopup.querySelector('#card-popup__button');
+
+    cardPopupButton.disabled = true;
+    cardPopupButton.classList.add('popup__button_disabled');
+  };

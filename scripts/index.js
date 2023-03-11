@@ -44,8 +44,6 @@ const userInputPicture = document.querySelector('#card-popup__input_type_picture
 
 const photoGrid = document.querySelector('.photo-grid');
 
-const formList = document.querySelectorAll('.popup__form');
-
 const formValidators = {};
 
 const initialCards = [
@@ -169,6 +167,8 @@ popups.forEach(popup => {
 });
 
 const enableValidation = (config) => {
+  const formList = document.querySelectorAll('.popup__form');
+  
   formList.forEach(formElement => {
     const validator = new FormValidator(config, formElement);
 
