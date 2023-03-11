@@ -24,7 +24,11 @@ const cardPopupInputPicture = cardPopup.querySelector('#card-popup__input_type_p
 
 const cardPopupButton = cardPopup.querySelector('.popup__button');
 
+const picturePopup = document.querySelector('#picture-popup');
+
 const picturePopupImage = document.querySelector('#picture-popup__image');
+
+const picturePopupCaption = document.querySelector('#picture-popup__caption');
 
 const userName = document.querySelector('.profile__text_type_name');
 
@@ -39,6 +43,8 @@ const userInputTitle = document.querySelector('#card-popup__input_type_title');
 const userInputPicture = document.querySelector('#card-popup__input_type_picture');
 
 const photoGrid = document.querySelector('.photo-grid');
+
+const formList = document.querySelectorAll('.popup__form');
 
 const formValidators = {};
 
@@ -72,9 +78,9 @@ const initialCards = [
 const handleCardClick = (name, link) => {
   picturePopupImage.src = link;
   picturePopupImage.alt = name;
-  document.querySelector('#picture-popup__caption').textContent = name;
+  picturePopupCaption.textContent = name;
 
-  openPopup(document.querySelector('#picture-popup'));
+  openPopup(picturePopup);
 };
 
 const createCard = (initialCard) => {
@@ -163,8 +169,6 @@ popups.forEach(popup => {
 });
 
 const enableValidation = (config) => {
-  const formList = document.querySelectorAll('.popup__form'); 
-
   formList.forEach(formElement => {
     const validator = new FormValidator(config, formElement);
 
