@@ -13,7 +13,7 @@
       <button id="popup__cross" type="button" class="popup__cross"></button>
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form id="profile-popup-form" name="popup__form" class="popup__form" novalidate>
+        <form id="profile-popup-form" name="profile-popup__form" class="popup__form" novalidate>
           <input
             name="input-name"
             class="popup__input"
@@ -44,7 +44,7 @@
       <button id="card-popup__cross" type="button" class="popup__cross"></button>
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
-        <form id="card-popup-form" name="popup__form" class="popup__form" novalidate>
+        <form id="card-popup-form" name="card-popup__form" class="popup__form" novalidate>
           <input
             name="input-title"
             class="popup__input"
@@ -72,8 +72,8 @@
     <div id="picture-popup" class="popup">
       <figure class="popup__figure">
         <button class="popup__cross popup__cross_picture"></button>
-        <img class="popup__image">
-        <figcaption class="popup__caption"></figcaption>
+        <img id="picture-popup__image" class="popup__image">
+        <figcaption id="picture-popup__caption" class="popup__caption"></figcaption>
       </figure>
     </div>
     <header class="header">

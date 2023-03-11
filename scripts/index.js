@@ -32,6 +32,8 @@ const photoGrid = document.querySelector('.photo-grid');
 
 const formElements = document.querySelectorAll('.popup__form');
 
+const formValidators = {};
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -59,12 +61,28 @@ const initialCards = [
   }
 ];
 
-initialCards.forEach(initialCard => {
-  const card = new Card(initialCard, '#new-card');
+const handleCardClick = (name, link) => {
+  const picturePopupImage = document.querySelector('#picture-popup__image');
+
+  picturePopupImage.src = link;
+  picturePopupImage.alt = name;
+  document.querySelector('#picture-popup__caption').textContent = name;
+
+  openPopup(document.querySelector('#picture-popup'));
+};
+
+const createCard = (initialCard) => {
+  const card = new Card(initialCard, '#new-card', handleCardClick);
 
   const cardElement = card.generateCard();
 
-  photoGrid.prepend(cardElement);
+  return cardElement;
+}
+
+initialCards.forEach(initialCard => {
+  const newCard = createCard(initialCard);
+
+  photoGrid.prepend(newCard);
 });
 
 // Открытие попапа
@@ -99,14 +117,12 @@ profilePopupForm.addEventListener('submit', () => {
 cardPopupForm.addEventListener('submit', (e) => {
   closePopup(cardPopup);
 
-  const card = new Card({
+  const newCard = createCard({
     name: userInputTitle.value,
     link: userInputPicture.value
-  }, '#new-card');
+  });
 
-  const cardElement = card.generateCard();
-
-  photoGrid.prepend(cardElement);
+  photoGrid.prepend(newCard);
 
   e.target.reset();
 });
@@ -119,15 +135,7 @@ editButton.addEventListener('click', () => {
   userInputActivity.value = userActivity.textContent;
 
   if(profilePopupButton.disabled) {
-    profilePopupButton.disabled = false;
-    profilePopupButton.classList.remove('popup__button_disabled');
-    
-    profilePopup.querySelectorAll('.popup__error').forEach(profilePopupError => {
-      profilePopupError.textContent = '';
-    });
-    profilePopup.querySelectorAll('.popup__input_type_error').forEach(profilePopupInput => {
-      profilePopupInput.classList.remove('popup__input_type_error');
-    });
+    formValidators['profile-popup__form'].resetValidation(true);
   };
 });
 
@@ -136,11 +144,12 @@ addCardButton.addEventListener('click', () => {
 
   const cardPopupInputTitle = cardPopup.querySelector('#card-popup__input_type_title');
 
-  if(cardPopupInputTitle.value === '') {
-    const cardPopupButton = cardPopup.querySelector('#card-popup__button');
+  const cardPopupInputPicture = cardPopup.querySelector('#card-popup__input_type_picture');
 
-    cardPopupButton.disabled = true;
-    cardPopupButton.classList.add('popup__button_disabled');
+  const cardPopupButton = cardPopup.querySelector('.popup__button');
+
+  if((cardPopupInputTitle.value === '' && cardPopupInputPicture.value === '') || cardPopupButton.disabled) {
+    formValidators['card-popup__form'].resetValidation(false);
   };
 });
 
@@ -155,13 +164,23 @@ popups.forEach(popup => {
   });
 });
 
-formElements.forEach(formElement => {
-  const formValidator = new FormValidator({
-    inputSelector: '.popup__input',
-    inputErrorClass: 'popup__input_type_error',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled'
-  }, formElement);
+const enableValidation = (config) => {
+  const formList = document.querySelectorAll('.popup__form'); 
 
-  formValidator.enableValidation();
+  formList.forEach(formElement => {
+    const validator = new FormValidator(config, formElement);
+
+    const formName = formElement.getAttribute('name');
+
+    formValidators[formName] = validator;
+
+    validator.enableValidation();
+  });
+};
+
+enableValidation({
+  inputSelector: '.popup__input',
+  inputErrorClass: 'popup__input_type_error',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled'
 });

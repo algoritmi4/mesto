@@ -1,8 +1,9 @@
 export default class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   };
 
   _getTemplate() {
@@ -16,49 +17,17 @@ export default class Card {
   };
 
   _toggleHeartState() {
-    this._element.querySelector('.photo-grid__heart').classList.toggle('photo-grid__heart_active');
+    this._cardLikeImage.classList.toggle('photo-grid__heart_active');
   };
 
   _removeCardElement() {
     this._element.remove();
   };
 
-  _openPicturePopup() {
-    document.querySelector('#picture-popup').classList.add('popup_opened');
-
-    document.addEventListener('keydown', (e) => {
-      this._closePopupEscapePressed(e);
-    });
-  };
-
-  _closePicturePopup() {
-    document.querySelector('#picture-popup').classList.remove('popup_opened');
-
-    document.removeEventListener('keydown', (e) => {
-      this._closePopupEscapePressed(e);
-    });
-  }
-
-  _closePopupEscapePressed(e) {
-    if(e.key === 'Escape') {
-      this._closePicturePopup();
-    };
-  };
-
-  _handleOpenPicturePopup() {
-    const picturePopupImage = document.querySelector('.popup__image');
-
-    const cardElementImage = this._element.querySelector('.photo-grid__image');
-
-    this._openPicturePopup();
-
-    picturePopupImage.src = cardElementImage.src;
-    picturePopupImage.alt = cardElementImage.alt;
-    document.querySelector('.popup__caption').textContent = this._element.querySelector('.photo-grid__card-title').textContent;
-  };
-
   _setEventListeners() {
-    this._element.querySelector('.photo-grid__heart').addEventListener('click', () => {
+    this._cardLikeImage = this._element.querySelector('.photo-grid__heart');
+
+    this._cardLikeImage.addEventListener('click', () => {
       this._toggleHeartState();
     });
 
@@ -66,19 +35,25 @@ export default class Card {
       this._removeCardElement();
     });
 
-    this._element.querySelector('.photo-grid__image').addEventListener('click', () => {
-      this._handleOpenPicturePopup();
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link);
     });
   };
 
   generateCard() {
     this._element = this._getTemplate();
 
+    this._cardImage = this._element.querySelector('.photo-grid__image');
+
+    this._cardTitle = this._element.querySelector('.photo-grid__card-title');
+
+    this._picturePopupImage = document.querySelector('.popup__image');
+
     this._setEventListeners(this._element);
 
-    this._element.querySelector('.photo-grid__image').src = this._link;
-    this._element.querySelector('.photo-grid__image').alt = this._name;
-    this._element.querySelector('.photo-grid__card-title').textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._cardTitle.textContent = this._name;
 
     return this._element;
   };
