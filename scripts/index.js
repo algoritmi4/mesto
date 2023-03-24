@@ -2,6 +2,14 @@ import FormValidator from './FormValidator.js';
 
 import Card from './Card.js';
 
+import Section from './Section.js';
+
+import PopupWithImage from './PopupWithImage.js';
+
+import PopupWithForm from './PopupWithForm.js';
+
+import UserInfo from './UserInfo.js';
+
 const popups = document.querySelectorAll('.popup');
 
 const editButton = document.querySelector('.profile__edit-button');
@@ -74,71 +82,60 @@ const initialCards = [
 ];
 
 const handleCardClick = (name, link) => {
-  picturePopupImage.src = link;
-  picturePopupImage.alt = name;
-  picturePopupCaption.textContent = name;
+  const popup = new PopupWithImage('#picture-popup', name, link);
 
-  openPopup(picturePopup);
+  popup.open();
 };
 
-const createCard = (initialCard) => {
-  const card = new Card(initialCard, '#new-card', handleCardClick);
+const newCard = new Section({
+  items: initialCards,
+  renderer: (initialCard) => {
+    const card = new Card(initialCard, '#new-card', handleCardClick);
+  
+    const cardElement = card.generateCard();
+  
+    newCard.addItem(cardElement);
+  }
+}, '.photo-grid');
 
-  const cardElement = card.generateCard();
+newCard.renderItems();
 
-  return cardElement;
-}
-
-initialCards.forEach(initialCard => {
-  const newCard = createCard(initialCard);
-
-  photoGrid.prepend(newCard);
-});
-
-// Открытие попапа
-const openPopup = (popup) => {
-  popup.classList.add('popup_opened');
-
-  document.addEventListener('keydown', closePopupEscapePressed);
-};
-
-// Закрытие попапа
-const closePopup = (popup) => {
-  popup.classList.remove('popup_opened');
-
-  document.removeEventListener('keydown', closePopupEscapePressed);
-};
-
-// Закрытие попапа при нажатии клавиши "Escape"
-const closePopupEscapePressed = (e) => {
-  if(e.key === 'Escape') {
-    const popupOpened = document.querySelector('.popup_opened');
-
-    closePopup(popupOpened);
-  };
-};
-
-profilePopupForm.addEventListener('submit', () => {
-  closePopup(profilePopup);
-  userName.textContent = userInputName.value;
-  userActivity.textContent = userInputActivity.value;
-});
 
 cardPopupForm.addEventListener('submit', (e) => {
   closePopup(cardPopup);
 
-  const newCard = createCard({
-    name: userInputTitle.value,
-    link: userInputPicture.value
-  });
-
-  photoGrid.prepend(newCard);
+  const newCard = new Section({
+    items: [{
+      name: userInputTitle.value,
+      link: userInputPicture.value
+    }],
+    renderer: (initialCard) => {
+      const card = new Card(initialCard, '#new-card', handleCardClick);
+    
+      const cardElement = card.generateCard();
+    
+      newCard.addItem(cardElement);
+    }
+  }, '.photo-grid');
+  
+  newCard.renderItems();
 
   e.target.reset();
 });
 
+const userInfo = new UserInfo('.profile__text_type_name', '.profile__text_type_activity');
+
+const submitFormCallbackProfile = ({ name, activity }) => {
+  userName.textContent = name;
+  userActivity.textContent = activity;
+}
+
 editButton.addEventListener('click', () => {
-  openPopup(profilePopup);
+  const popupProfile = new PopupWithForm('#profile-popup', { submitFormCallback: submitFormCallbackProfile });
+
+  popupProfile.open();
+  popupProfile.setEventListeners();
+
   userInputName.value = userName.textContent;
   userInputActivity.value = userActivity.textContent;
 
@@ -147,23 +144,16 @@ editButton.addEventListener('click', () => {
   };
 });
 
+const submitFormCallbackCard = () => {}
+
 addCardButton.addEventListener('click', () => {
-  openPopup(cardPopup);
+  const popupCard = new PopupWithForm('#card-popup', { submitFormCallback: submitFormCallbackCard });
+
+  popupCard.open();
 
   if((cardPopupInputTitle.value === '' && cardPopupInputPicture.value === '') || cardPopupButton.disabled) {
     formValidators['card-popup__form'].resetValidation(false);
   };
-});
-
-// Закрытие попапов при клике по оверлею
-popups.forEach(popup => {
-  popup.addEventListener('click', e => {
-    const closeButton = popup.querySelector('.popup__cross')
-
-    if(e.target === e.currentTarget || e.target === closeButton) {
-      closePopup(popup);
-    };
-  });
 });
 
 const enableValidation = (config) => {
