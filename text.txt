@@ -33,3 +33,25 @@ popups.forEach(popup => {
     };
   });
 });
+
+
+
+cardPopupForm.addEventListener('submit', (e) => {
+  const newCard = new Section({
+    items: [{
+      name: userInputTitle.value,
+      link: userInputPicture.value
+    }],
+    renderer: (initialCard) => {
+      const card = new Card(initialCard, '#new-card', handleCardClick);
+    
+      const cardElement = card.generateCard();
+    
+      newCard.addItem(cardElement);
+    }
+  }, '.photo-grid');
+  
+  newCard.renderItems();
+
+  e.target.reset();
+});

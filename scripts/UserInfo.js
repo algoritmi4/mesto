@@ -9,14 +9,14 @@ export default class UserInfo {
   getUserInfo() {
     const userInfo = {};
 
-    userInfo[userName] = this._userName.textContent;
-    userInfo[userActivity] = this._userActivity.textContent;
+    userInfo['userName'] = this._userName.textContent;
+    userInfo['userActivity'] = this._userActivity.textContent;
 
     return userInfo;
   };
 
-  setUserInfo({ userInputName, userInputActivity }) {
-    this._userName.textContent = userInputName.value;
-    this._userActivity.textContent = userInputActivity.value;
+  setUserInfo({ name, activity }) {
+    this._userName.textContent = name;
+    this._userActivity.textContent = activity;
   };
 }

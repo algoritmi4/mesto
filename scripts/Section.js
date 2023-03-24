@@ -9,6 +9,10 @@ export default class Section {
     document.querySelector(this._containerSelector).prepend(element);
   };
 
+  renderItem() {
+    this._renderer(this._renderedItems);
+  }
+
   renderItems() {
     this._renderedItems.forEach(item => {
       this._renderer(item);
