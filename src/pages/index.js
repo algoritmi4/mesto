@@ -16,16 +16,6 @@ const editButton = document.querySelector('.profile__edit-button');
 
 const addCardButton = document.querySelector('.profile__add-button');
 
-const popupCard = document.querySelector('#card-popup');
-
-const cardPopupInputTitle = popupCard.querySelector('#card-popup__input_type_title');
-
-const cardPopupInputPicture = popupCard.querySelector('#card-popup__input_type_picture');
-
-const userInputName = document.querySelector('#popup__input_type_name');
-
-const userInputActivity = document.querySelector('#popup__input_type_activity');
-
 const formValidators = {};
 
 const initialCards = [
@@ -55,6 +45,14 @@ const initialCards = [
   }
 ];
 
+const createCard = (items) => {
+  const card = new Card(items, '#new-card', handleCardClick);
+  
+  const cardElement = card.generateCard();
+
+  return cardElement;
+};
+
 const userInfo = new UserInfo('.profile__text_type_name', '.profile__text_type_activity');
 
 const picturePopup = new PopupWithImage('#picture-popup');
@@ -68,12 +66,9 @@ const handleProfileFormSubmit = ({ name, activity }) => {
 const handleEditButtonClick = () => {
   profilePopup.open();
 
-  userInputName.value = userInfo.getUserInfo()['userName'];
-  userInputActivity.value = userInfo.getUserInfo()['userActivity'];
+  profilePopup.setInputValues(userInfo.getUserInfo());
 
-  if(document.querySelector('#profile-popup__button').disabled) {
-    formValidators['profile-popup__form'].resetValidation(true);
-  };
+  formValidators['profile-popup__form'].resetValidation(true);
 };
 
 editButton.addEventListener('click', handleEditButtonClick);
@@ -83,29 +78,16 @@ profilePopup.setEventListeners();
 
 
 const handleCardFormSubmit = ({ title, picture }) => {
-  const newCard = new Section({
-    items: {
-      name: title,
-      link: picture
-    },
-    renderer: (items) => {
-      const card = new Card(items, '#new-card', handleCardClick);
-    
-      const cardElement = card.generateCard();
-    
-      newCard.addItem(cardElement);
-    }
-  }, '.photo-grid');
-
-  newCard.renderItem();
+  newCard.renderItem({
+    name: title,
+    link: picture
+  });
 };
 
 const handleAddButtonClick = () => {
   cardPopup.open();
 
-  if(cardPopupInputTitle.value === '' && cardPopupInputPicture.value === '') {
-    formValidators['card-popup__form'].resetValidation(false);
-  };
+  formValidators['card-popup__form'].resetValidation(false);
 };
 
 addCardButton.addEventListener('click', handleAddButtonClick);
@@ -122,9 +104,7 @@ const handleCardClick = (name, link) => {
 const newCard = new Section({
   items: initialCards,
   renderer: (initialCard) => {
-    const card = new Card(initialCard, '#new-card', handleCardClick);
-  
-    const cardElement = card.generateCard();
+    const cardElement = createCard(initialCard);
   
     newCard.addItem(cardElement);
   }

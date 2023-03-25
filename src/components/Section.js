@@ -3,14 +3,15 @@ export default class Section {
     this._renderedItems = items;
     this._renderer = renderer;
     this._containerSelector = containerSelector;
+    this._containerElement = document.querySelector(this._containerSelector);
   };
 
   addItem(element) {
-    document.querySelector(this._containerSelector).prepend(element);
+    this._containerElement.prepend(element);
   };
 
-  renderItem() {
-    this._renderer(this._renderedItems);
+  renderItem(cardItems) {
+    this._renderer(cardItems);
   }
 
   renderItems() {
