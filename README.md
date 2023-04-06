@@ -1,3 +1,3 @@
 # mesto
 Проект: Место
-https://Agregati4.github.io/mesto
+https://agregati4.github.io/mesto
