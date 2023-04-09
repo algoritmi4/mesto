@@ -75,20 +75,47 @@
         <figcaption id="picture-popup__caption" class="popup__caption"></figcaption>
       </figure>
     </div>
+    <div id="delete-popup" class="popup">
+      <button id="delete-popup__cross" type="button" class="popup__cross"></button>
+      <div class="popup__container">
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form id="delete-popup-form" class="popup__form">
+          <button class="popup__button">Да</button>
+        </form>
+      </div>
+    </div>
+    <div id="profile-image-popup" class="popup">
+      <button id="close-popup__cross" type="button" class="popup__cross"></button>
+      <div class="popup__container">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form id="profile-image-popup__form" name="profile-image-popup__form" class="popup__form" novalidate>
+          <input
+            name="link"
+            class="popup__input"
+            id="profile-image-popup__input_type_title"
+            type="url"
+            placeholder="Ссылка на картинку"
+            required
+          >
+          <span class="popup__error link-error"></span>
+          <button id="profile-image-popup__button" class="popup__button">Сохранить</button>
+        </form>
+      </div>
+    </div>
     <header class="header">
       <img class="logo" src="<%=require('./images/logo.svg')%>" alt="Логотип" >
     </header>
     <main class="content">
       <section class="profile">
-        <img
+        <div class="profile__image-link"><img
           src="<%=require('./images/profile__image.jpg')%>"
           alt="Изображение человека"
           class="profile__image"
-        >
+        ></div>
         <div class="profile__info">
-          <h1 class="profile__text profile__text_type_name">Жак-Ив Кусто</h1>
+          <h1 class="profile__text profile__text_type_name"></h1>
           <button type="button" class="profile__edit-button"></button>
-          <p class="profile__text profile__text_type_activity">Исследователь океана</p>
+          <p class="profile__text profile__text_type_activity"></p>
         </div>
         <button type="button" class="profile__add-button"></button>
       </section>
@@ -105,7 +132,10 @@
         >
         <div class="photo-grid__card-caption">
           <h2 class="photo-grid__card-title"></h2>
-          <button type="button" class="photo-grid__heart"></button>
+          <div class="photo-grid__likes">
+            <button type="button" class="photo-grid__heart"></button>
+            <p class="photo-grid__hearts-quantity">5</p>
+          </div>
         </div>
       </div>
     </template>

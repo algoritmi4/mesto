@@ -8,10 +8,11 @@
   line-height: 1.21;
   max-width: 358px;
   box-sizing: border-box;
+  padding: 0;
 }
 
 .popup__input:first-of-type{
-  margin: 54px 0 0;
+  margin: 47px 0 0;
 }
 
 @media all and (max-width: 520px) {
