@@ -3,7 +3,7 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
-    this._cardId = data._id;
+    this.cardId = data._id;
     this._ownerId = data.owner._id;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
@@ -23,11 +23,11 @@ export default class Card {
     return cardElement;
   };
 
-  _toggleHeartState() {
+  toggleHeartState() {
     this._cardLikeImage.classList.toggle('photo-grid__heart_active');
   };
 
-  _removeCardElement() {
+  removeCardElement() {
     this._element.remove();
   };
 
@@ -35,19 +35,13 @@ export default class Card {
     this._cardLikeImage = this._element.querySelector('.photo-grid__heart');
 
     this._cardLikeImage.addEventListener('click', () => {
-      this._toggleHeartState();
 
       if(this._cardLikeImage.classList.contains('photo-grid__heart_active')) {
-        this._increaseLikesQuantity(this._cardId)
-        .then(likesObject => {
-          this._handleLikesQuantity(likesObject.likes);
-        })
+        this._decreaseLikesQuantity(this.cardId)
       } else {
-        this._decreaseLikesQuantity(this._cardId)
-        .then(likesObject => {
-          this._handleLikesQuantity(likesObject.likes);
-        })
+        this._increaseLikesQuantity(this.cardId)
       }
+
     });
 
     this._cardImage.addEventListener('click', () => {
@@ -55,7 +49,7 @@ export default class Card {
     });
   };
 
-  _handleLikesQuantity(likesObject) {
+  handleLikesQuantity(likesObject) {
     this._likesQuantity.textContent = String(likesObject.length);
   }
 
@@ -83,7 +77,7 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._cardTitle.textContent = this._name;
-    this._handleLikesQuantity(this._likes);
+    this.handleLikesQuantity(this._likes);
 
     return this._element;
   };

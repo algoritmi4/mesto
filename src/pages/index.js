@@ -59,23 +59,46 @@ const handleCardClick = (name, link) => {
   picturePopup.open(name, link);
 };
 
+const handleLikesCondition = (card, likesObject) => {
+  card.handleLikesQuantity(likesObject.likes);
+
+  card.toggleHeartState();
+}
+
 const createCard = (items, userId) => {
   const card = new Card(items, '#new-card', handleCardClick,{
     openPopupWithConfirmation: (card) => {
       popupWithConfirmation.open();
 
       popupWithConfirmation.setSubmitAction(() => {
-        api.deleteCard(card._cardId)
+        api.deleteCard(card.cardId)
         .then(() => {
-          card._removeCardElement();
+          card.removeCardElement();
+
+          popupWithConfirmation.close();
+        })
+        .catch((err) => {
+          alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
         })
       });
     }, 
     increaseLikesQuantity: (id) => {
       return api.increaseLikesQuantity(id)
+      .then(likesObject => {
+        handleLikesCondition(card, likesObject)
+      })
+      .catch((err) => {
+        alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+      })
     },
     decreaseLikesQuantity: (id) => {
       return api.decreaseLikesQuantity(id)
+      .then(likesObject => {
+        handleLikesCondition(card, likesObject)
+      })
+      .catch((err) => {
+        alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+      })
     }
   }, userId);
   
@@ -91,7 +114,7 @@ picturePopup.setEventListeners();
 
 
 
-const userInfo = new UserInfo('.profile__text_type_name', '.profile__text_type_activity');
+const userInfo = new UserInfo('.profile__text_type_name', '.profile__text_type_activity', '.profile__image');
 
 
 
@@ -99,12 +122,14 @@ const handleProfileFormSubmit = ({ name, activity }) => {
   api.saveNewUserInfo({ name, activity })
   .then(newUserInfo => {
     userInfo.setUserInfo({ name: newUserInfo.name, activity: newUserInfo.about });
+
+    profilePopup.close();
   })
   .catch((err) => {
     alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
   })
   .finally(res => {
-    document.querySelector('#profile-popup__button').textContent = 'Сохранить';
+    profilePopup.button.textContent = 'Сохранить';
   })
 };
 
@@ -134,23 +159,17 @@ addCardButton.addEventListener('click', handleAddButtonClick);
 
 
 const handleCardFormSubmit = ({ title, picture }) => {
-  Promise.all([api.getUserInfo(), api.saveNewCardInfo({ title, picture })])
-  .then(([userInfo, newCardInfo]) => {
-    userId = userInfo._id;
+  api.saveNewCardInfo({ title, picture })
+  .then((newCardInfo) => {
+    newCard.renderItem(newCardInfo, userId);
 
-    newCard.renderItem({
-      name: newCardInfo.name,
-      link: newCardInfo.link,
-      _id: newCardInfo._id,
-      likes: [],
-      owner: newCardInfo.owner
-    }, userId);
+    cardPopup.close();
   })
   .catch((err) => {
     alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
   })
   .finally(res => {
-    document.querySelector('#card-popup__button').textContent = 'Сохранить';
+    cardPopup.button.textContent = 'Сохранить';
   })
 };
 
@@ -166,14 +185,16 @@ popupWithConfirmation.setEventListeners();
 
 const handleProfileImageFormSubmit = (inputValues) => {
   api.updateProfileImage(inputValues.link)
-  .then(userInfo => {
-    profileImage.src = userInfo.avatar;
+  .then(newUserInfo => {
+    userInfo.setUserAvatar(newUserInfo.avatar);
+
+    profileImagePopup.close();
   })
   .catch((err) => {
     alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
   })
   .finally(res => {
-    document.querySelector('#profile-image-popup__button').textContent = 'Сохранить';
+    profileImagePopup.button.textContent = 'Сохранить';
   })
 };
 
