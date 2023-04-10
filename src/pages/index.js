@@ -49,7 +49,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   profileImage.src = userInfo.avatar;
 })
 .catch((err) => {
-  alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+  alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`);
 });
 
 
@@ -78,7 +78,7 @@ const createCard = (items, userId) => {
           popupWithConfirmation.close();
         })
         .catch((err) => {
-          alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+          alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`);
         })
       });
     }, 
@@ -88,7 +88,7 @@ const createCard = (items, userId) => {
         handleLikesCondition(card, likesObject)
       })
       .catch((err) => {
-        alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+        alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`);
       })
     },
     decreaseLikesQuantity: (id) => {
@@ -97,7 +97,7 @@ const createCard = (items, userId) => {
         handleLikesCondition(card, likesObject)
       })
       .catch((err) => {
-        alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+        alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`);
       })
     }
   }, userId);
@@ -126,10 +126,10 @@ const handleProfileFormSubmit = ({ name, activity }) => {
     profilePopup.close();
   })
   .catch((err) => {
-    alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+    alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`);
   })
   .finally(res => {
-    profilePopup.button.textContent = 'Сохранить';
+    profilePopup.changeButtonText(profilePopup.button);
   })
 };
 
@@ -166,10 +166,10 @@ const handleCardFormSubmit = ({ title, picture }) => {
     cardPopup.close();
   })
   .catch((err) => {
-    alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+    alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`);
   })
   .finally(res => {
-    cardPopup.button.textContent = 'Сохранить';
+    cardPopup.changeButtonText(cardPopup.button);
   })
 };
 
@@ -191,10 +191,10 @@ const handleProfileImageFormSubmit = (inputValues) => {
     profileImagePopup.close();
   })
   .catch((err) => {
-    alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`)
+    alert(`Ошибка при запросе данных с сервера: ${err.name} - ${err.message}`);
   })
   .finally(res => {
-    profileImagePopup.button.textContent = 'Сохранить';
+    profileImagePopup.changeButtonText(profileImagePopup.button);
   })
 };
 
