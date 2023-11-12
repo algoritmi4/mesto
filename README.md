@@ -4,4 +4,4 @@
 
 Используемые технологии: Адаптивная вестка, примитивные технологии javaScript, методы ООП, методы работы с сервером.
 
-Ссылка на GitHub Pages: https://agregati4.github.io/mesto/
+Ссылка на GitHub Pages: https://algoritmi4.github.io/mesto/
